@@ -1,42 +1,34 @@
-goal = 12
+from objects import *
+
+goal = 13
 possible_numbers = [1, 2]
+max_number = max(possible_numbers)
 
 mul_lookup = {}
 paths = []
 
-for a in possible_numbers:
-    for b in possible_numbers:
-        c = a * b
-        if c not in mul_lookup:
-            mul_lookup[c] = [a, b]
-print(mul_lookup)
 
-
-class Add(a, b):
-    def __init__(self):
-        self.a = a
-        self.b = b
-        self.result = a + b
-        self.path = [a, b]
-        if self.result not in mul_lookup:
-            mul_lookup[self.result] = self.path
+def search_add(current, goal):
+    if current + max_number >= goal:
+        diff = goal - current
+        if diff in possible_numbers:
+            return Add(current, diff)
         else:
-            mul_lookup[self.result].append(self.path)
-        print(mul_lookup)
-
-
-def find_path():
-    if goal in mul_lookup:
-        paths.append(mul_lookup[goal])
-        return paths
+            return None
     else:
-        for a in possible_numbers:
-            for b in possible_numbers:
-                c = a * b
-                if c in mul_lookup:
-                    paths.append(mul_lookup[c])
-                    return paths
+        return current
 
 
-f = find_path()
+def search_sub(current, goal):
+    if current - max_number <= goal:
+        diff = goal + current
+        if diff in possible_numbers:
+            return Sub(current, diff)
+        else:
+            return None
+    else:
+        return current
+
+
+f = search_add(0, goal)
 print(f)
